@@ -1,6 +1,7 @@
 package baylinux01.securityDemo.services;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +21,9 @@ import org.springframework.stereotype.Service;
 import baylinux01.securityDemo.Entities.AppUser;
 import baylinux01.securityDemo.Entities.LoginDTO;
 import baylinux01.securityDemo.repositories.AppUserRepository;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.security.InvalidKeyException;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class AppUserService{
@@ -106,6 +110,91 @@ public class AppUserService{
 			
 		}
 		else return null;
+	}
+
+
+	public String updateAppUserPassword(HttpServletRequest request,String newPassword) {
+		
+/*jwt olmadan requestten kullanıcı adını alma kodları başlangıcı*/		
+		Principal pl=request.getUserPrincipal();
+		String username=pl.getName();
+/*jwt olmadan requestten kullanıcı adını alma kodları sonu*/
+		
+/*jwt ile requestten kullanıcı adını alma kodları başlangıcı*/
+//		String authHeader=request.getHeader("Authorization");
+//		String jwt=null;
+//		String username=null;
+//		
+//		if(authHeader!=null && authHeader.startsWith("Bearer "))
+//		{
+//			//token=authHeader.substring("Bearer ".length());
+//			jwt=authHeader.substring(7);
+//			
+//					try {
+//						username=jWTService.extractUsername(jwt);
+//					} catch (JwtException | IllegalArgumentException | NoSuchAlgorithmException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					
+//		}
+//		else return "fail";
+/*jwt ile requestten kullanıcı adını alma kodları sonu*/
+		
+		
+		if(username!=null)
+		{
+		AppUser user=appUserRepository.findByUsername(username);
+		user.setPassword(passwordEncoder.encode(newPassword));
+		appUserRepository.save(user);
+		return "success";
+		}
+		else return "fail";
+		
+	}
+
+
+	public String updateAppUserUsername(HttpServletRequest request, String newUsername) {
+/*jwt olmadan requestten kullanıcı adını alma kodları başlangıcı*/
+		Principal pl=request.getUserPrincipal();
+		String username=pl.getName();
+/*jwt olmadan requestten kullanıcı adını alma kodları sonu*/	
+		
+/*jwt ile requestten kullanıcı adını alma kodları başlangıcı*/
+//		String authHeader=request.getHeader("Authorization");
+//		String jwt=null;
+//		String username=null;
+//		
+//		if(authHeader!=null && authHeader.startsWith("Bearer "))
+//		{
+//			//token=authHeader.substring("Bearer ".length());
+//			jwt=authHeader.substring(7);
+//			
+//					try {
+//						username=jWTService.extractUsername(jwt);
+//					} catch (JwtException | IllegalArgumentException | NoSuchAlgorithmException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					
+//		}
+//		else return "fail";
+/*jwt ile requestten kullanıcı adını alma kodları sonu*/	
+		
+		if(username!=null)
+		{
+			List<AppUser> users=appUserRepository.findAll();
+			for(AppUser u:users)
+			{
+				if(u.getUsername().equals(username)) return "username already exists";
+			}
+			AppUser user=appUserRepository.findByUsername(username);
+			user.setUsername(username);
+			appUserRepository.save(user);
+			return "success";
+		}
+		else return "fail";
+		
 	}
 
 
