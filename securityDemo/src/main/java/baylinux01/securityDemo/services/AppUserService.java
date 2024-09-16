@@ -116,29 +116,29 @@ public class AppUserService{
 	public String updateAppUserPassword(HttpServletRequest request,String newPassword) {
 		
 /*jwt olmadan requestten kullanıcı adını alma kodları başlangıcı*/		
-		Principal pl=request.getUserPrincipal();
-		String username=pl.getName();
+//		Principal pl=request.getUserPrincipal();
+//		String username=pl.getName();
 /*jwt olmadan requestten kullanıcı adını alma kodları sonu*/
 		
 /*jwt ile requestten kullanıcı adını alma kodları başlangıcı*/
-//		String authHeader=request.getHeader("Authorization");
-//		String jwt=null;
-//		String username=null;
-//		
-//		if(authHeader!=null && authHeader.startsWith("Bearer "))
-//		{
-//			//token=authHeader.substring("Bearer ".length());
-//			jwt=authHeader.substring(7);
-//			
-//					try {
-//						username=jWTService.extractUsername(jwt);
-//					} catch (JwtException | IllegalArgumentException | NoSuchAlgorithmException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					
-//		}
-//		else return "fail";
+		String authHeader=request.getHeader("Authorization");
+		String jwt=null;
+		String username=null;
+		
+		if(authHeader!=null && authHeader.startsWith("Bearer "))
+		{
+			//token=authHeader.substring("Bearer ".length());
+			jwt=authHeader.substring(7);
+			
+					try {
+						username=jWTService.extractUsername(jwt);
+					} catch (JwtException | IllegalArgumentException | NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+		}
+		else return "fail";
 /*jwt ile requestten kullanıcı adını alma kodları sonu*/
 		
 		
@@ -156,29 +156,29 @@ public class AppUserService{
 
 	public String updateAppUserUsername(HttpServletRequest request, String newUsername) {
 /*jwt olmadan requestten kullanıcı adını alma kodları başlangıcı*/
-		Principal pl=request.getUserPrincipal();
-		String username=pl.getName();
+//		Principal pl=request.getUserPrincipal();
+//		String username=pl.getName();
 /*jwt olmadan requestten kullanıcı adını alma kodları sonu*/	
 		
 /*jwt ile requestten kullanıcı adını alma kodları başlangıcı*/
-//		String authHeader=request.getHeader("Authorization");
-//		String jwt=null;
-//		String username=null;
-//		
-//		if(authHeader!=null && authHeader.startsWith("Bearer "))
-//		{
-//			//token=authHeader.substring("Bearer ".length());
-//			jwt=authHeader.substring(7);
-//			
-//					try {
-//						username=jWTService.extractUsername(jwt);
-//					} catch (JwtException | IllegalArgumentException | NoSuchAlgorithmException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					
-//		}
-//		else return "fail";
+		String authHeader=request.getHeader("Authorization");
+		String jwt=null;
+		String username=null;
+		
+		if(authHeader!=null && authHeader.startsWith("Bearer "))
+		{
+			//token=authHeader.substring("Bearer ".length());
+			jwt=authHeader.substring(7);
+			
+					try {
+						username=jWTService.extractUsername(jwt);
+					} catch (JwtException | IllegalArgumentException | NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+		}
+		else return "fail";
 /*jwt ile requestten kullanıcı adını alma kodları sonu*/	
 		
 		if(username!=null)

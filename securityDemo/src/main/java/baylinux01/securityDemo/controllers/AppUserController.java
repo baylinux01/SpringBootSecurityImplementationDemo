@@ -50,6 +50,7 @@ public class AppUserController {
 	{
 		return appUserService.getAppUserById(id);
 	}
+	
 	@GetMapping("/getAllAppUsers")
 	public List<AppUser> getAllAppUsers()
 	{
